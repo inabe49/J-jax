@@ -23,4 +23,9 @@ describe("date", () => {
         assert.equal(51544, jax.date.getModifiedJulianDate(new Date(2000, 1, 1)));
 
     });
+
+
+    it("TimeSpan", () => {
+        var dt = jax.date.TimeSpan.fromDates(new Date(), new Date());
+    });
 });
