@@ -1,6 +1,6 @@
 {
   "name": "j-jax",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "TypeScript Library",
   "main": "src/jax.js",
   "scripts": {
@@ -18,7 +18,8 @@
   "homepage": "https://github.com/inabe49/j-jax",
   "files": [
     "src/**/*.js",
-    "src/**/*.d.ts"
+    "src/**/*.d.ts",
+    "src/**/*.js.map"
   ],
   "typings": "./src/jax.d.ts",
   "devDependencies": {

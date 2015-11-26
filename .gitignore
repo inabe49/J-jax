@@ -8,7 +8,7 @@ src/**/*.d.ts
 test/**/*.d.ts
 
 
-typings/
+#typings/
 
 
 # Node.js

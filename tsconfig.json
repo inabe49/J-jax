@@ -30,7 +30,8 @@
         "./src/util/url.ts",
         "./test/test.ts",
         "./test/type.ts",
-        "./test/util/date.ts"
+        "./test/util/date.ts",
+        "./test/util/url.ts"
     ],
     "compileOnSave": true,
     "buildOnSave": true,

@@ -10,6 +10,9 @@ export var Callback = callback.Callback;
 import _date = require("./util/date");
 export var date = _date;
 
+import _url = require("./util/url");
+export var url = _url;
+
 
 export function isString(obj: any): boolean {
     if (!obj) {

@@ -5,9 +5,7 @@ node_js:
   - "0.12"
 before_install:
   - npm install -g typescript
-  - npm install -g tsd
   - npm install
-  - tsd reinstall
 script:
   - tsc
   - npm test
