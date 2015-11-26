@@ -30,7 +30,8 @@
         "./src/util/timespan.ts",
         "./src/util/url.ts",
         "./test/test.ts",
-        "./test/type.ts"
+        "./test/type.ts",
+        "./test/util/date.ts"
     ],
     "compileOnSave": true,
     "buildOnSave": true,

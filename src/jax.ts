@@ -7,6 +7,9 @@ export var Try = _try.Try;
 import callback = require("./util/callback");
 export var Callback = callback.Callback;
 
+import _date = require("./util/date");
+export var date = _date;
+
 
 export function isString(obj: any): boolean {
     if (!obj) {
