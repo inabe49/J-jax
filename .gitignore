@@ -1,0 +1,23 @@
+src/**/*.js
+test/**/*.js
+
+src/**/*.js.map
+test/**/*.js.map
+
+src/**/*.d.ts
+test/**/*.d.ts
+
+
+typings/
+
+
+# Node.js
+node_modules/
+
+# OS
+.DS_Store
+._*
+Thumbs.db
+*.cache
+*.cmd
+*.bat

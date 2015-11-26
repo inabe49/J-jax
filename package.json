@@ -1,0 +1,30 @@
+{
+  "name": "j-jax",
+  "version": "0.0.6",
+  "description": "TypeScript Library",
+  "main": "src/jax.js",
+  "scripts": {
+    "test": "mocha --compilers ts:espower-typescript/guess test/**/*.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inabe49/j-jax"
+  },
+  "author": "inabe49",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/inabe49/j-jax/issues"
+  },
+  "homepage": "https://github.com/inabe49/j-jax",
+  "files": [
+    "src/**/*.js",
+    "src/**/*.d.ts"
+  ],
+  "typings": "./src/jax.d.ts",
+  "devDependencies": {
+    "espower-typescript": "^3.0.0",
+    "mocha": "^2.3.4",
+    "power-assert": "^1.2.0",
+    "sinon": "^1.17.2"
+  }
+}

@@ -1,0 +1,26 @@
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.md]
+trim_trailing_whitespace = false
+
+[Makefile]
+indent_style = tab
+
+[*.{less,css,scala,html}]
+indent_size = 2
+
+
+[.travis.yml]
+indent_size = 2
+
+
+[*.{ts,js,json}]
+indent_size = 4
