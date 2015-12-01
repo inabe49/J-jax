@@ -63,4 +63,38 @@ describe("isAny", () => {
     });
 
 
+    it("isNone", () => {
+        assert.ok(jax.isNone(undefined));
+        assert.ok(jax.isNone(null));
+
+        assert.ok(!jax.isNone(""));
+        assert.ok(!jax.isNone(0));
+        assert.ok(!jax.isNone({}));
+    });
+
+    it("isBoolean", () => {
+        assert.ok(jax.isBoolean(true));
+        assert.ok(jax.isBoolean(false));
+
+        assert.ok(!jax.isBoolean(undefined));
+        assert.ok(!jax.isBoolean(null));
+    });
+
+
+    it("isNumber", () => {
+        assert.ok(jax.isNumber(0));
+        assert.ok(jax.isNumber(1));
+
+        assert.ok(!jax.isNumber(undefined));
+        assert.ok(!jax.isNumber(null));
+        assert.ok(!jax.isNumber(""));
+        assert.ok(!jax.isNumber({}));
+        assert.ok(!jax.isNumber([]));
+    });
+
+
+    it("isObject", () => {
+        assert.ok(jax.isObject({}));
+    });
+
 });

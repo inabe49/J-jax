@@ -18,6 +18,7 @@ export function isString(obj: any): boolean {
     if (!obj) {
         return (obj === "");
     }
+
     return typeof(obj) === "string" || obj instanceof String;
 }
 
@@ -29,7 +30,7 @@ export function isNumber(obj: any): boolean {
     if (!obj) {
         return (obj === 0);
     }
-    return (typeof(obj) === "number" || obj instanceof Number);
+    return typeof(obj) === "number" || obj instanceof Number;
 }
 
 
@@ -47,22 +48,24 @@ export function isObject(obj: any): boolean {
 export function isEmptyObject(obj: any): boolean {
     if (isObject(obj)) {
         var name;
-        for ( name in obj ) {
+        for (name in obj) {
             return false;
         }
+
         return true;
     }
+
     return false;
 }
 
 
 export function isNone(obj: any): boolean {
-    return (obj === undefined) || (obj === null);
+    return obj === undefined || obj === null;
 }
 
 
 export function isBoolean(obj: any): boolean {
-    return (obj === true) || (obj === false);
+    return obj === true || obj === false;
 }
 
 
@@ -79,6 +82,7 @@ function equalArray(obj1: any[], obj2: any[]): boolean {
             return false;
         }
     }
+
     return true;
 }
 
