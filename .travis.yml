@@ -7,7 +7,6 @@ before_install:
   - npm install -g typescript
   - npm install
 script:
-  - tsc
   - npm test
 cache:
   directories:
