@@ -1,8 +1,8 @@
-/// <reference path="../typings/power-assert/power-assert.d.ts" />
-/// <reference path="../typings/mocha/mocha.d.ts" />
+/// <reference path="../../typings/power-assert/power-assert.d.ts" />
+/// <reference path="../../typings/mocha/mocha.d.ts" />
 
 import assert from "power-assert";
-import jax from "../src/jax";
+import jax from "../../src/jax";
 
 
 describe("isAny", () => {
