@@ -1,4 +1,4 @@
-import _try = require("./try");
+import * as _try from "./try";
 
 
 export class Future<A> {

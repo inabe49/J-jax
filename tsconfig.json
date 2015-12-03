@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
+        "target": "es6",
         "removeComments": true,
         "declaration": true,
         "sourceMap": true,
@@ -27,8 +26,8 @@
         "./src/monad/try.ts",
         "./src/util/callback.ts",
         "./src/util/date.ts",
+        "./src/util/type.ts",
         "./src/util/url.ts",
-        "./test/test.ts",
         "./test/type.ts",
         "./test/util/date.ts",
         "./test/util/url.ts"

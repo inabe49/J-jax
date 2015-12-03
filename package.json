@@ -4,7 +4,7 @@
   "description": "TypeScript Library",
   "main": "src/jax.js",
   "scripts": {
-    "test": "mocha --compilers ts:espower-typescript/guess test/**/*.ts"
+    "test": "tsc && mocha --compilers js:espower-babel/guess test/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,10 @@
   ],
   "typings": "./src/jax.d.ts",
   "devDependencies": {
+    "babel": "^6.1.18",
+    "babel-polyfill": "^6.2.0",
+    "babel-preset-es2015": "^6.1.18",
+    "espower-babel": "^4.0.0",
     "espower-typescript": "^3.0.0",
     "mocha": "^2.3.4",
     "power-assert": "^1.2.0",

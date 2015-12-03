@@ -2,7 +2,7 @@
 /// <reference path="../../typings/mocha/mocha.d.ts" />
 
 import assert from "power-assert";
-import * as jax from "../../src/jax";
+import jax from "../../src/jax";
 
 
 
