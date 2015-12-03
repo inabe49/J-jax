@@ -28,7 +28,7 @@
         "./src/util/date.ts",
         "./src/util/type.ts",
         "./src/util/url.ts",
-        "./test/type.ts",
+        "./test/base/type.ts",
         "./test/util/date.ts",
         "./test/util/url.ts"
     ],
