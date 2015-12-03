@@ -1,6 +1,20 @@
 import * as _try from "./try";
 
 
+export interface IFutureAwaiter<A> {
+    isCompleted: () => boolean;
+
+    onCompleted: (callback: (a: A) => void) => void;
+}
+
+export interface IFuture<A> {
+    map<B>(f: (a: A) => B): IFuture<B>;
+    flatMap<B>(callback: (a: A) => IFuture<B>): IFuture<B>;
+
+    getAwaiter: () => IFutureAwaiter<A>;
+}
+
+
 export class Future<A> {
     private _result: _try.ITry<A>;
 
