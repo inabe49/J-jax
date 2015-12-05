@@ -14,6 +14,7 @@ export function isNumber(obj: any): boolean {
     if (!obj) {
         return (obj === 0);
     }
+
     return typeof(obj) === "number" || obj instanceof Number;
 }
 
@@ -92,6 +93,7 @@ export function isEqualObject(obj1: any, obj2: any): boolean {
             return true;
         }
     }
+
     if (isArray(obj1) && isArray(obj2)) {
         return equalArray(obj1, obj2);
     }
@@ -106,5 +108,6 @@ export function isEqualArray(obj1: any, obj2: any): boolean {
     if (isArray(obj1) && isArray(obj2)) {
         return equalArray(obj1, obj2);
     }
+
     return false;
 }
