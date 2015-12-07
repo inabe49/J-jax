@@ -2,7 +2,7 @@ import * as _try from "./try";
 
 
 export interface IFutureAwaiter<A> {
-    isCompleted(): boolean;
+    isCompleted: boolean;
 
     onCompleted(callback: (a: _try.ITry<A>) => void): void;
 
@@ -20,7 +20,7 @@ export class FutureAwaiter<A> implements IFutureAwaiter<A> {
         this._callbacks = [];
     }
 
-    public isCompleted(): boolean {
+    get isCompleted(): boolean {
         return this._hasCompleted;
     }
 
@@ -34,6 +34,8 @@ export class FutureAwaiter<A> implements IFutureAwaiter<A> {
 
     public setResult(result: _try.ITry<A>): void {
         if (this._hasCompleted) {
+            // 既に答えがある場合は何もしない
+            return;
         } else {
             this._hasCompleted = true;
             this._result = result;
@@ -65,9 +67,13 @@ export class Future<A> implements IFuture<A> {
     }
 
 
-    public static fromCallback<A>(): Future<A> {
+    public static fromCallback<A>(trigger: (a: IFutureAwaiter<A>) => void): Future<A> {
         // chrome.windows.getAll(callback: (wnds: chrome.windows.Window[]) => void);
-        return null;
+        let a = new FutureAwaiter<A>();
+
+        trigger(a);
+
+        return new Future<A>(a);
     }
 
     public map<B>(f: (a:A) => B): Future<B> {
@@ -84,18 +90,19 @@ export class Future<A> implements IFuture<A> {
         let a = new FutureAwaiter<B>();
 
         this._awaiter.onCompleted((result: _try.ITry<A>) => {
+            if (result.isSuccess) {
+                f(result.toOption().getOrElse(null))._awaiter.onCompleted((r: _try.ITry<B>) => {
+                    a.setResult(r);
+                });
+            } else {
+                a.setResult(_try.Try.Fail<B>(result.toException().getOrElse(null)));
+            }
         });
-
 
         return new Future<B>(a);
     }
 
-
-    private setResult(result: _try.ITry<A>): void {
-
-    }
-
     public getAwaiter(): IFutureAwaiter<A> {
-        return null;
+        return this._awaiter;
     }
 }

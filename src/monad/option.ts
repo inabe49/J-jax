@@ -14,6 +14,9 @@ export interface IOption<A> {
     flatMap<B>(callback: (a: A) => IOption<B>): IOption<B>;
 
     getOrElse(def: A): A;
+
+    isEmpty: boolean;
+    isDefined: boolean;
 }
 
 
@@ -33,6 +36,14 @@ export class Some<A> implements IOption<A> {
     public getOrElse(def: A): A {
         return this.value;
     }
+
+    get isDefined(): boolean {
+        return true;
+    }
+
+    get isEmpty(): boolean {
+        return false;
+    }
 }
 
 
@@ -50,5 +61,13 @@ export class None<A> implements IOption<A> {
 
     public getOrElse(def: A): A {
         return def;
+    }
+
+    get isDefined(): boolean {
+        return false;
+    }
+
+    get isEmpty(): boolean {
+        return true;
     }
 }

@@ -1,3 +1,6 @@
+import * as option from "./option";
+
+
 export module Try {
     export function Return<A>(value: A): ITry<A> {
         return new Success<A>(value);
@@ -22,6 +25,12 @@ export interface ITry<A> {
     flatMap<B>(callback: (a: A) => ITry<B>): ITry<B>;
 
     getOrElse(def: A): A;
+
+    isSuccess: boolean;
+    isFailure: boolean;
+
+    toOption(): option.IOption<A>;
+    toException(): option.IOption<any>;
 }
 
 
@@ -41,6 +50,22 @@ export class Success<A> implements ITry<A> {
     public getOrElse(def: A): A {
         return this.value;
     }
+
+    get isSuccess(): boolean {
+        return true;
+    }
+
+    get isFailure(): boolean {
+        return false;
+    }
+
+    public toOption(): option.IOption<A> {
+        return option.Option.Retrun(this.value);
+    }
+
+    public toException(): option.IOption<A> {
+        return option.Option.Fail<A>();
+    }
 }
 
 
@@ -58,5 +83,21 @@ export class Failure<A> implements ITry<A> {
 
     public getOrElse(def: A): A {
         return def;
+    }
+
+    get isSuccess(): boolean {
+        return false;
+    }
+
+    get isFailure(): boolean {
+        return true;
+    }
+
+    public toOption(): option.IOption<A> {
+        return option.Option.Fail<A>();
+    }
+
+    public toException(): option.IOption<A> {
+        return option.Option.Retrun(this.exception);
     }
 }

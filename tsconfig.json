@@ -30,6 +30,7 @@
         "./src/util/type.ts",
         "./src/util/url.ts",
         "./test/base/type.ts",
+        "./test/monad/option.ts",
         "./test/util/date.ts",
         "./test/util/url.ts"
     ],
