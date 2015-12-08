@@ -15,4 +15,8 @@ describe("Option", () => {
         assert.ok(jax.Option.Fail<number>().isEmpty);
         assert.ok(!jax.Option.Fail<number>().isDefined);
     });
+
+    it("getOrElse", () => {
+        assert.ok(jax.Option.Retrun(true).getOrElse(false));
+    });
 });
