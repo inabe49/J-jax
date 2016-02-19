@@ -9,6 +9,13 @@ export class DateTime {
 
 
     public static getModifiedJulianDate(date: Date): number {
+/*
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+
+        return day + Math.floor(30.6 * month + 0.5) + Math.floor(365.25 * year) + Math.floor(-0.75 * Math.floor(year / 100.0)) - 678881;
+*/
         var y = date.getFullYear();
         var m = date.getMonth();
         var d = date.getDate();
