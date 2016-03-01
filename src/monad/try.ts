@@ -1,21 +1,19 @@
 import * as option from "./option";
 
 
-export module Try {
-    export function Return<A>(value: A): ITry<A> {
-        return new Success<A>(value);
-    }
+export function success<A>(value: A): ITry<A> {
+    return new Success<A>(value);
+}
 
-    export function Fail<A>(ex: any): ITry<A> {
-        return new Failure<A>(ex);
-    }
+export function fail<A>(ex: any): ITry<A> {
+    return new Failure<A>(ex);
+}
 
-    export function Execute<A>(f: () => A): ITry<A> {
-        try {
-            return new Success<A>(f());
-        } catch (e) {
-            return new Failure<A>(e);
-        }
+export function execute<A>(f: () => A): ITry<A> {
+    try {
+        return new Success<A>(f());
+    } catch (e) {
+        return new Failure<A>(e);
     }
 }
 
@@ -40,11 +38,23 @@ export class Success<A> implements ITry<A> {
 
 
     public map<B>(callback: (a: A) => B): ITry<B> {
-        return new Success<B>(callback(this.value));
+        try {
+            const result = callback(this.value);
+
+            return new Success<B>(result);
+        }
+        catch (e) {
+            return new Failure<B>(e);
+        }
     }
 
     public flatMap<B>(callback: (a: A) => ITry<B>): ITry<B> {
-        return callback(this.value);
+        try {
+            return callback(this.value);
+        }
+        catch (e) {
+            return new Failure<B>(e);
+        }
     }
 
     public getOrElse(def: A): A {
@@ -60,11 +70,11 @@ export class Success<A> implements ITry<A> {
     }
 
     public toOption(): option.IOption<A> {
-        return option.Option.Retrun(this.value);
+        return option.some(this.value);
     }
 
     public toException(): option.IOption<A> {
-        return option.Option.Fail<A>();
+        return option.fail<A>();
     }
 }
 
@@ -94,10 +104,10 @@ export class Failure<A> implements ITry<A> {
     }
 
     public toOption(): option.IOption<A> {
-        return option.Option.Fail<A>();
+        return option.fail<A>();
     }
 
     public toException(): option.IOption<A> {
-        return option.Option.Retrun(this.exception);
+        return option.some(this.exception);
     }
 }

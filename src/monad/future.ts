@@ -95,7 +95,7 @@ export class Future<A> implements IFuture<A> {
                     a.setResult(r);
                 });
             } else {
-                a.setResult(_try.Try.Fail<B>(result.toException().getOrElse(null)));
+                a.setResult(_try.fail<B>(result.toException().getOrElse(null)));
             }
         });
 

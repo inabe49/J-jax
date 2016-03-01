@@ -1,13 +1,12 @@
-export module Option {
-    export function Retrun<A>(value: A): IOption<A> {
-        return new Some<A>(value);
-    }
 
-    export function Fail<A>(): IOption<A> {
-        return new None<A>();
-    }
+
+export function some<A>(value: A): IOption<A> {
+    return new Some<A>(value);
 }
 
+export function fail<A>(): IOption<A> {
+    return new None<A>();
+}
 
 export interface IOption<A> {
     map<B>(callback: (a: A) => B): IOption<B>;

@@ -33,5 +33,6 @@ export const TimeSpan = _timespan.TimeSpan;
 export const DateTime = _datetime.DateTime;
 
 
-export const Option = _option.Option;
-export const Try = _try.Try;
+export const Option = _option;
+export const Try = _try;
+export const Either = _either;
