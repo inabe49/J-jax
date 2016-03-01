@@ -4,15 +4,15 @@ import * as _try from "./try";
 export interface IFutureAwaiter<A> {
     isCompleted: boolean;
 
-    onCompleted(callback: (a: _try.ITry<A>) => void): void;
+    onCompleted(callback: (a: _try.Try<A>) => void): void;
 
-    setResult(result: _try.ITry<A>): void;
+    setResult(result: _try.Try<A>): void;
 }
 
 export class FutureAwaiter<A> implements IFutureAwaiter<A> {
     private _hasCompleted: boolean;
-    private _result: _try.ITry<A>;
-    private _callbacks: { (a: _try.ITry<A>): void; }[];
+    private _result: _try.Try<A>;
+    private _callbacks: { (a: _try.Try<A>): void; }[];
 
 
     constructor() {
@@ -24,7 +24,7 @@ export class FutureAwaiter<A> implements IFutureAwaiter<A> {
         return this._hasCompleted;
     }
 
-    public onCompleted(callback: (a: _try.ITry<A>)=> void): void {
+    public onCompleted(callback: (a: _try.Try<A>)=> void): void {
         if (this._hasCompleted) {
             callback(this._result);
         } else {
@@ -32,7 +32,7 @@ export class FutureAwaiter<A> implements IFutureAwaiter<A> {
         }
     }
 
-    public setResult(result: _try.ITry<A>): void {
+    public setResult(result: _try.Try<A>): void {
         if (this._hasCompleted) {
             // 既に答えがある場合は何もしない
             return;
@@ -78,7 +78,7 @@ export class Future<A> implements IFuture<A> {
 
     public map<B>(f: (a:A) => B): Future<B> {
         let result_awaiter = new FutureAwaiter<B>();
-        this._awaiter.onCompleted((reseult: _try.ITry<A>) => {
+        this._awaiter.onCompleted((reseult: _try.Try<A>) => {
             result_awaiter.setResult(reseult.map(f));
         });
 
@@ -89,9 +89,9 @@ export class Future<A> implements IFuture<A> {
     public flatMap<B>(f: (a: A) => Future<B>): Future<B> {
         let a = new FutureAwaiter<B>();
 
-        this._awaiter.onCompleted((result: _try.ITry<A>) => {
+        this._awaiter.onCompleted((result: _try.Try<A>) => {
             if (result.isSuccess) {
-                f(result.toOption().getOrElse(null))._awaiter.onCompleted((r: _try.ITry<B>) => {
+                f(result.toOption().getOrElse(null))._awaiter.onCompleted((r: _try.Try<B>) => {
                     a.setResult(r);
                 });
             } else {

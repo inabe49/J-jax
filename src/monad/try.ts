@@ -1,15 +1,29 @@
 import * as option from "./option";
 
 
-export function success<A>(value: A): ITry<A> {
+export interface Try<A> {
+    map<B>(callback: (a: A) => B): Try<B>;
+    flatMap<B>(callback: (a: A) => Try<B>): Try<B>;
+
+    getOrElse(def: A): A;
+
+    isSuccess: boolean;
+    isFailure: boolean;
+
+    toOption(): option.Option<A>;
+    toException(): option.Option<any>;
+}
+
+
+export function success<A>(value: A): Try<A> {
     return new Success<A>(value);
 }
 
-export function fail<A>(ex: any): ITry<A> {
+export function fail<A>(ex: any): Try<A> {
     return new Failure<A>(ex);
 }
 
-export function execute<A>(f: () => A): ITry<A> {
+export function execute<A>(f: () => A): Try<A> {
     try {
         return new Success<A>(f());
     } catch (e) {
@@ -18,26 +32,12 @@ export function execute<A>(f: () => A): ITry<A> {
 }
 
 
-export interface ITry<A> {
-    map<B>(callback: (a: A) => B): ITry<B>;
-    flatMap<B>(callback: (a: A) => ITry<B>): ITry<B>;
-
-    getOrElse(def: A): A;
-
-    isSuccess: boolean;
-    isFailure: boolean;
-
-    toOption(): option.IOption<A>;
-    toException(): option.IOption<any>;
-}
-
-
-export class Success<A> implements ITry<A> {
+export class Success<A> implements Try<A> {
     constructor(public value: A) {
     }
 
 
-    public map<B>(callback: (a: A) => B): ITry<B> {
+    public map<B>(callback: (a: A) => B): Try<B> {
         try {
             const result = callback(this.value);
 
@@ -48,7 +48,7 @@ export class Success<A> implements ITry<A> {
         }
     }
 
-    public flatMap<B>(callback: (a: A) => ITry<B>): ITry<B> {
+    public flatMap<B>(callback: (a: A) => Try<B>): Try<B> {
         try {
             return callback(this.value);
         }
@@ -69,25 +69,25 @@ export class Success<A> implements ITry<A> {
         return false;
     }
 
-    public toOption(): option.IOption<A> {
+    public toOption(): option.Option<A> {
         return option.some(this.value);
     }
 
-    public toException(): option.IOption<A> {
+    public toException(): option.Option<A> {
         return option.fail<A>();
     }
 }
 
 
-export class Failure<A> implements ITry<A> {
+export class Failure<A> implements Try<A> {
     constructor(public exception: any) {
     }
 
-    public map<B>(callback: (a: A) => B): ITry<B> {
+    public map<B>(callback: (a: A) => B): Try<B> {
         return new Failure<B>(this.exception);
     }
 
-    public flatMap<B>(callback: (a: A) => ITry<B>): ITry<B> {
+    public flatMap<B>(callback: (a: A) => Try<B>): Try<B> {
         return new Failure<B>(this.exception);
     }
 
@@ -103,11 +103,11 @@ export class Failure<A> implements ITry<A> {
         return true;
     }
 
-    public toOption(): option.IOption<A> {
+    public toOption(): option.Option<A> {
         return option.fail<A>();
     }
 
-    public toException(): option.IOption<A> {
+    public toException(): option.Option<A> {
         return option.some(this.exception);
     }
 }

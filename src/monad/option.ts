@@ -1,16 +1,16 @@
 
 
-export function some<A>(value: A): IOption<A> {
+export function some<A>(value: A): Option<A> {
     return new Some<A>(value);
 }
 
-export function fail<A>(): IOption<A> {
+export function fail<A>(): Option<A> {
     return new None<A>();
 }
 
-export interface IOption<A> {
-    map<B>(callback: (a: A) => B): IOption<B>;
-    flatMap<B>(callback: (a: A) => IOption<B>): IOption<B>;
+export interface Option<A> {
+    map<B>(callback: (a: A) => B): Option<B>;
+    flatMap<B>(callback: (a: A) => Option<B>): Option<B>;
 
     getOrElse(def: A): A;
 
@@ -20,15 +20,15 @@ export interface IOption<A> {
 
 
 
-export class Some<A> implements IOption<A> {
+export class Some<A> implements Option<A> {
     constructor(public value: A) {
     }
 
-    public map<B>(callback: (a: A) => B): IOption<B> {
+    public map<B>(callback: (a: A) => B): Option<B> {
         return new Some<B>(callback(this.value));
     }
 
-    public flatMap<B>(callback: (a: A) => IOption<B>): IOption<B> {
+    public flatMap<B>(callback: (a: A) => Option<B>): Option<B> {
         return callback(this.value);
     }
 
@@ -46,15 +46,15 @@ export class Some<A> implements IOption<A> {
 }
 
 
-export class None<A> implements IOption<A> {
+export class None<A> implements Option<A> {
     constructor() {
     }
 
-    public map<B>(callback: (a: A) => B): IOption<B> {
+    public map<B>(callback: (a: A) => B): Option<B> {
         return new None<B>();
     }
 
-    public flatMap<B>(callback: (a: A) => IOption<B>): IOption<B> {
+    public flatMap<B>(callback: (a: A) => Option<B>): Option<B> {
         return new None<B>();
     }
 
