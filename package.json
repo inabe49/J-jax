@@ -1,32 +1,33 @@
 {
-    "name": "j-jax",
-    "version": "0.0.14",
-    "description": "TypeScript Library",
-    "main": "src/jax.js",
-    "scripts": {
-        "test": "mocha --compilers ts:espower-typescript/guess test/**/*.ts",
-        "prepublish": "tsc"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/inabe49/j-jax"
-    },
-    "author": "inabe49",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/inabe49/j-jax/issues"
-    },
-    "homepage": "https://github.com/inabe49/j-jax",
-    "files": [
-        "src/**/*.js",
-        "src/**/*.d.ts",
-        "src/**/*.js.map"
-    ],
-    "typings": "src/jax.d.ts",
-    "devDependencies": {
-        "espower-typescript": "^3.0.0",
-        "mocha": "^2.3.4",
-        "power-assert": "^1.2.0",
-        "sinon": "^1.17.2"
-    }
+  "name": "j-jax",
+  "version": "0.0.14",
+  "description": "TypeScript Library",
+  "main": "src/jax.js",
+  "scripts": {
+    "pretest": "tsc",
+    "test": "mocha test/**/*.js",
+    "prepublish": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inabe49/j-jax"
+  },
+  "author": "inabe49",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/inabe49/j-jax/issues"
+  },
+  "homepage": "https://github.com/inabe49/j-jax",
+  "files": [
+    "src/**/*.js",
+    "src/**/*.d.ts",
+    "src/**/*.js.map"
+  ],
+  "typings": "src/jax.d.ts",
+  "devDependencies": {
+    "espower-typescript": "^5.0.1",
+    "mocha": "^3.0.2",
+    "power-assert": "^1.4.1",
+    "sinon": "^1.17.5"
+  }
 }

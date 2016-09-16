@@ -1,3 +1,15 @@
+export interface Url {
+    url?: string;
+    private _query: {[key: string]: string};
+
+    private _scheme: string;
+    private _user: string;
+    private _password: string;
+    private _host: string;
+    private _port: number;
+    private _path: string;
+}
+
 export function getQueryFromUrl(url: string): {[key: string]: string} {
     var query_str: string = (url.split("?")[1] || "").split("#")[0];
     if (!query_str) {
