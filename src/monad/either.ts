@@ -45,12 +45,58 @@ export class LeftProjection<L, R> {
 }
 
 
+export class RightProjection<L, R> {
+    private _e: Either<L, R>;
+
+    constructor(e: Either<L, R>) {
+        this._e = e;
+    }
+
+    exists(): boolean {
+        return this._e.isLeft();
+    }
+
+    flatMap<R2>(f: (r: R) => Either<L, R2>): Either<L, R2> {
+        if (this._e.isRight()) {
+            return f((<_Right<L, R>>this._e).value);
+        } else {
+            return new _Left<L, R2>((<_Left<L, R>>this._e).value);
+        }
+    }
+
+    get(): R {
+        if (this._e.isRight()) {
+            return (<_Right<L, R>>this._e).value;
+        } else {
+            return null;
+        }
+    }
+
+    getOrElse(or: () => R): R {
+        if (this._e.isLeft()) {
+            return (<_Right<L, R>>this._e).value;
+        } else {
+            return or();
+        }
+    }
+
+    map<R2>(f: (r: R) => R2): Either<L, R2> {
+        if (this._e.isRight()) {
+            return new _Right<L, R2>(f((<_Right<L, R>>this._e).value));
+        } else {
+            return new _Left<L, R2>((<_Left<L, R>>this._e).value);
+        }
+    }
+}
+
+
 
 export interface Either<L, R> {
     isLeft(): boolean;
     isRight(): boolean;
 
     left(): LeftProjection<L, R>;
+    right(): RightProjection<L, R>;
 
     map<R2>(f: (r: R) => R2): Either<L, R2>;
     flatMap<R2>(f: (r: R) => Either<L, R2>): Either<L, R2>;
@@ -77,6 +123,10 @@ class _Left<L, R> implements Either<L, R> {
 
     left(): LeftProjection<L, R> {
         return new LeftProjection<L, R>(this);
+    }
+
+    right(): RightProjection<L, R> {
+        return new RightProjection<L, R>(this);
     }
 
 
@@ -111,6 +161,10 @@ class _Right<L, R> implements Either<L, R> {
 
     left(): LeftProjection<L, R> {
         return new LeftProjection<L, R>(this);
+    }
+
+    right(): RightProjection<L, R> {
+        return new RightProjection<L, R>(this);
     }
 
     map<R2>(f: (r: R) => R2): Either<L, R2> {

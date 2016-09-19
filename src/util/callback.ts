@@ -1,63 +1,37 @@
-interface ICallbackData {
-    callback: (...args: any[])=>any;
-    context?: any;
+interface CallbackItem<T> {
+    context: any;
+    callback: (arg: T) => void;
 }
 
 
-export class Callback {
-    private _callbacks: ICallbackData[];
-    private _fired: boolean;
+export class Callback<T> {
+    private _items: CallbackItem<T>[];
 
     constructor() {
-        this._callbacks = [];
-        this._fired = false;
+        this._items = [];
     }
 
+    public fire(arg: T): void {
+        for (let i = 0; i < this._items.length; i++) {
+            this._items[i].callback.apply(this._items[i].context, [arg]);
+        }
+    }
 
-    add(callback: (...args: any[])=>any, context?: any): void {
-        this._callbacks.push({
+    public add(context: any, callback: (arg: T) => void): () => void {
+        const that: Callback<T> = this;
+        const item: CallbackItem<T> = {
+            context: context,
             callback: callback,
-            context: context
-        });
-    }
+        };
 
+        this._items.push(item);
 
-    fire(...args: any[]): void {
-        var len: number = this._callbacks.length;
-        var i: number;
-        var c: ICallbackData;
-
-        for (i = 0; i < len; i++) {
-            c = this._callbacks[i];
-            if (c.context) {
-                c.callback.apply(c.context, args);
-            } else {
-                c.callback.apply(this, args);
+        return () => {
+            for (let i = 0; i < that._items.length; i++) {
+                if (that._items[i] === item) {
+                    that._items.splice(i, 1);
+                }
             }
-        }
-
-        this._callbacks = [];
-        this._fired = true;
-    }
-
-
-    hasFired(): boolean {
-        return this._fired;
-    }
-
-
-    remove(callback?: (...args: any[])=>any): void {
-        if (!callback) {
-            this._callbacks = [];
-            return;
-        }
-
-        var len: number = this._callbacks.length;
-        var i: number;
-        for (i = 0; i < len; i++) {
-            if (this._callbacks[i].callback === callback) {
-                this._callbacks.splice(i, 1);
-            }
-        }
+        };
     }
 }

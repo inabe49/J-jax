@@ -1,4 +1,4 @@
-import * as option from "./option";
+import { Option, Some, None } from "./option";
 
 
 export interface Try<A> {
@@ -7,32 +7,15 @@ export interface Try<A> {
 
     getOrElse(def: A): A;
 
-    isSuccess: boolean;
-    isFailure: boolean;
+    isSuccess(): boolean;
+    isFailure(): boolean;
 
-    toOption(): option.Option<A>;
-    toException(): option.Option<any>;
+    toOption(): Option<A>;
+    toException(): Option<any>;
 }
 
 
-export function success<A>(value: A): Try<A> {
-    return new Success<A>(value);
-}
-
-export function fail<A>(ex: any): Try<A> {
-    return new Failure<A>(ex);
-}
-
-export function execute<A>(f: () => A): Try<A> {
-    try {
-        return new Success<A>(f());
-    } catch (e) {
-        return new Failure<A>(e);
-    }
-}
-
-
-export class Success<A> implements Try<A> {
+class _Success<A> implements Try<A> {
     constructor(public value: A) {
     }
 
@@ -41,10 +24,10 @@ export class Success<A> implements Try<A> {
         try {
             const result = callback(this.value);
 
-            return new Success<B>(result);
+            return new _Success<B>(result);
         }
         catch (e) {
-            return new Failure<B>(e);
+            return new _Failure<B>(e);
         }
     }
 
@@ -53,7 +36,7 @@ export class Success<A> implements Try<A> {
             return callback(this.value);
         }
         catch (e) {
-            return new Failure<B>(e);
+            return new _Failure<B>(e);
         }
     }
 
@@ -61,53 +44,70 @@ export class Success<A> implements Try<A> {
         return this.value;
     }
 
-    get isSuccess(): boolean {
+    isSuccess(): boolean {
         return true;
     }
 
-    get isFailure(): boolean {
+    isFailure(): boolean {
         return false;
     }
 
-    public toOption(): option.Option<A> {
-        return option.some(this.value);
+    public toOption(): Option<A> {
+        return Some(this.value);
     }
 
-    public toException(): option.Option<A> {
-        return option.fail<A>();
+    public toException(): Option<A> {
+        return None<A>();
     }
 }
 
 
-export class Failure<A> implements Try<A> {
+class _Failure<A> implements Try<A> {
     constructor(public exception: any) {
     }
 
     public map<B>(callback: (a: A) => B): Try<B> {
-        return new Failure<B>(this.exception);
+        return new _Failure<B>(this.exception);
     }
 
     public flatMap<B>(callback: (a: A) => Try<B>): Try<B> {
-        return new Failure<B>(this.exception);
+        return new _Failure<B>(this.exception);
     }
 
     public getOrElse(def: A): A {
         return def;
     }
 
-    get isSuccess(): boolean {
+    isSuccess(): boolean {
         return false;
     }
 
-    get isFailure(): boolean {
+    isFailure(): boolean {
         return true;
     }
 
-    public toOption(): option.Option<A> {
-        return option.fail<A>();
+    public toOption(): Option<A> {
+        return None<A>();
     }
 
-    public toException(): option.Option<A> {
-        return option.some(this.exception);
+    public toException(): Option<A> {
+        return Some(this.exception);
+    }
+}
+
+
+export function Success<A>(value: A): Try<A> {
+    return new _Success<A>(value);
+}
+
+export function Failure<A>(ex: any): Try<A> {
+    return new _Failure<A>(ex);
+}
+
+export function Execute<A>(f: () => A): Try<A> {
+    try {
+        return new _Success<A>(f());
+    } catch (e) {
+        return new _Failure<A>(e);
     }
 }

@@ -2,21 +2,21 @@
 /// <reference path="../../typings/mocha/mocha.d.ts" />
 
 import assert from "power-assert";
-import { Option } from "../../src/jax";
+import { Option, Some, None } from "../../src/jax";
 
 
 describe("Option", () => {
     it("Retrun", () => {
-        assert.ok(Option.some(0).isDefined);
-        assert.ok(!Option.some(0).isEmpty);
+        assert.ok(Some(0).isDefined);
+        assert.ok(!Some(0).isEmpty);
     });
 
     it("Fail", () => {
-        assert.ok(Option.fail<number>().isEmpty);
-        assert.ok(!Option.fail<number>().isDefined);
+        assert.ok(None<number>().isEmpty);
+        assert.ok(!None<number>().isDefined);
     });
 
     it("getOrElse", () => {
-        assert.ok(Option.some(true).getOrElse(false));
+        assert.ok(Some(true).getOrElse(false));
     });
 });

@@ -1,18 +1,10 @@
-import * as _try from "./try";
+import { Try, Success, Failure, Execute } from "./try";
+import { Callback } from "../util/callback";
 
-
-export interface IFutureAwaiter<A> {
-    isCompleted: boolean;
-
-    onCompleted(callback: (a: _try.Try<A>) => void): void;
-
-    setResult(result: _try.Try<A>): void;
-}
-
-export class FutureAwaiter<A> implements IFutureAwaiter<A> {
+export class FutureAwaiter<A> {
     private _hasCompleted: boolean;
-    private _result: _try.Try<A>;
-    private _callbacks: { (a: _try.Try<A>): void; }[];
+    private _result: Try<A>;
+    private _callbacks: { (a: Try<A>): void; }[];
 
 
     constructor() {
@@ -20,11 +12,11 @@ export class FutureAwaiter<A> implements IFutureAwaiter<A> {
         this._callbacks = [];
     }
 
-    get isCompleted(): boolean {
+    isCompleted(): boolean {
         return this._hasCompleted;
     }
 
-    public onCompleted(callback: (a: _try.Try<A>)=> void): void {
+    onCompleted(callback: (a: Try<A>) => void): void {
         if (this._hasCompleted) {
             callback(this._result);
         } else {
@@ -32,7 +24,7 @@ export class FutureAwaiter<A> implements IFutureAwaiter<A> {
         }
     }
 
-    public setResult(result: _try.Try<A>): void {
+    setResult(result: Try<A>): void {
         if (this._hasCompleted) {
             // 既に答えがある場合は何もしない
             return;
@@ -49,36 +41,29 @@ export class FutureAwaiter<A> implements IFutureAwaiter<A> {
 }
 
 
+export class Future<A> {
+    private _awaiter: FutureAwaiter<A>;
 
-export interface IFuture<A> {
-    map<B>(f: (a: A) => B): IFuture<B>;
-    flatMap<B>(callback: (a: A) => IFuture<B>): IFuture<B>;
-
-    getAwaiter(): IFutureAwaiter<A>;
-}
-
-
-
-export class Future<A> implements IFuture<A> {
-    private _awaiter: IFutureAwaiter<A>;
-
-    constructor(awaiter: IFutureAwaiter<A>) {
+    constructor(awaiter: FutureAwaiter<A>) {
         this._awaiter = awaiter;
     }
 
 
-    public static fromCallback<A>(trigger: (a: IFutureAwaiter<A>) => void): Future<A> {
-        // chrome.windows.getAll(callback: (wnds: chrome.windows.Window[]) => void);
-        let a = new FutureAwaiter<A>();
+    public static fromCallback<A>(f: (trigger: (result: Try<A>) => void) => void): Future<A> {
+        const awaiter = new FutureAwaiter<A>();
 
-        trigger(a);
+        f((result: Try<A>) => {
+            awaiter.setResult(result);
+        });
 
-        return new Future<A>(a);
+        return new Future<A>(awaiter);
     }
 
-    public map<B>(f: (a:A) => B): Future<B> {
+
+    public map<B>(f: (a: A) => B): Future<B> {
         let result_awaiter = new FutureAwaiter<B>();
-        this._awaiter.onCompleted((reseult: _try.Try<A>) => {
+
+        this._awaiter.onCompleted((reseult: Try<A>) => {
             result_awaiter.setResult(reseult.map(f));
         });
 
@@ -89,20 +74,17 @@ export class Future<A> implements IFuture<A> {
     public flatMap<B>(f: (a: A) => Future<B>): Future<B> {
         let a = new FutureAwaiter<B>();
 
-        this._awaiter.onCompleted((result: _try.Try<A>) => {
+        this._awaiter.onCompleted((result: Try<A>) => {
             if (result.isSuccess) {
-                f(result.toOption().getOrElse(null))._awaiter.onCompleted((r: _try.Try<B>) => {
+
+                f(result.toOption().getOrElse(null))._awaiter.onCompleted((r: Try<B>) => {
                     a.setResult(r);
                 });
             } else {
-                a.setResult(_try.fail<B>(result.toException().getOrElse(null)));
+                a.setResult(Failure<B>(result.toException().getOrElse(null)));
             }
         });
 
         return new Future<B>(a);
-    }
-
-    public getAwaiter(): IFutureAwaiter<A> {
-        return this._awaiter;
     }
 }

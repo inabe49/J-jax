@@ -33,6 +33,7 @@
         "./src/util/url.ts",
         "./test/base/type.ts",
         "./test/monad/either.ts",
+        "./test/monad/future.ts",
         "./test/monad/option.ts",
         "./test/util/date.ts",
         "./test/util/datetime.ts",
