@@ -1,19 +1,19 @@
-import { isNumber, isBoolean, isString, isFunction, isNone } from "./util/type";
-import { isArray, isEqualArray } from "./util/type";
-import { isObject, isEmptyObject, isEqualObject } from "./util/type";
+import { isNumber, isBoolean, isString, isFunction, isNone } from "./utils/type";
+import { isArray, isEqualArray } from "./utils/type";
+import { isObject, isEmptyObject, isEqualObject } from "./utils/type";
 
 
-import { Option, Some, None } from "./monad/option";
-import { Either, Left, LeftProjection, Right } from "./monad/either";
+import { Option, Some, None } from "./monads/option";
+import { Either, Left, LeftProjection, Right } from "./monads/either";
 
-import { Try } from "./monad/try";
-import { Future } from "./monad/future";
+import { Try } from "./monads/try";
+import { Future } from "./monads/future";
 
-import { Callback } from "./util/callback";
-import { DateTime } from "./util/datetime";
+import { Callback } from "./utils/callback";
+import { getModifiedJulianDate, isSameDate } from "./utils/datetime";
 import { TimeSpan } from "./util/timespan";
 
-import { Url, parseUrl, toUrlString } from "./util/url";
+import { Url, parseUrl, toUrlString } from "./utils/url";
 
 
 export {
@@ -27,7 +27,7 @@ export {
     Future,
 
     Callback,
-    DateTime,
+    getModifiedJulianDate, isSameDate,
     TimeSpan,
 
     Url, parseUrl, toUrlString,

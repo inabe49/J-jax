@@ -40,7 +40,11 @@ export interface Url {
 
 
 export function parseUrl(url: string): Url {
-    return null;
+    const result: Url = {
+        query: getQueryFromUrl(url),
+    };
+
+    return result;
 }
 
 

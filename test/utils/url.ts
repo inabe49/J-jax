@@ -2,12 +2,11 @@
 /// <reference path="../../typings/mocha/mocha.d.ts" />
 
 import assert from "power-assert";
-import * as jax from "../../src/jax";
-
-
+import { Url, parseUrl, toUrlString } from "../../src/jax";
+import { getQueryFromUrl } from "../../src/utils/url";
 
 describe("url", () => {
     it("getQueryFromUrl", () => {
-        assert.deepEqual({v : "ooMQdcTh3Y8"}, jax.url.getQueryFromUrl("https://www.youtube.com/watch?v=ooMQdcTh3Y8"));
+        assert.deepEqual({v : "ooMQdcTh3Y8"}, getQueryFromUrl("https://www.youtube.com/watch?v=ooMQdcTh3Y8"));
     });
 });

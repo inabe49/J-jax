@@ -2,8 +2,8 @@
 /// <reference path="../../typings/mocha/mocha.d.ts" />
 
 import assert from "power-assert";
-import { Try, Success, Failure } from "../../src/monad/try";
-import { Future } from "../../src/monad/future";
+import { Try, Success, Failure } from "../../src/monads/try";
+import { Future } from "../../src/monads/future";
 
 
 describe("Future", () => {
