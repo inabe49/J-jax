@@ -11,7 +11,7 @@ import { Future } from "./monads/future";
 
 import { Callback } from "./utils/callback";
 import { getModifiedJulianDate, isSameDate } from "./utils/datetime";
-import { TimeSpan } from "./util/timespan";
+import { TimeSpan, getTimeSpan, getTotalMilliseconds, getTotalSeconds, getTotalMinutes, getTotalHours, getTotalDays } from "./utils/timespan";
 
 import { Url, parseUrl, toUrlString } from "./utils/url";
 
@@ -28,7 +28,7 @@ export {
 
     Callback,
     getModifiedJulianDate, isSameDate,
-    TimeSpan,
+    TimeSpan, getTimeSpan, getTotalMilliseconds, getTotalSeconds, getTotalMinutes, getTotalHours, getTotalDays,
 
     Url, parseUrl, toUrlString,
 }
