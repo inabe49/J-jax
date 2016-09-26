@@ -7,13 +7,13 @@ import { Option, Some, None } from "../../src/jax";
 
 describe("Option", () => {
     it("Retrun", () => {
-        assert.ok(Some(0).isDefined);
-        assert.ok(!Some(0).isEmpty);
+        assert.ok(Some(0).isDefined());
+        assert.ok(!Some(0).isEmpty());
     });
 
     it("Fail", () => {
-        assert.ok(None<number>().isEmpty);
-        assert.ok(!None<number>().isDefined);
+        assert.ok(None<number>().isEmpty());
+        assert.ok(!None<number>().isDefined());
     });
 
     it("getOrElse", () => {

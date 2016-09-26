@@ -1,5 +1,5 @@
 import { Try, Success, Failure, Execute } from "./try";
-import { Callback } from "../util/callback";
+import { Callback } from "../utils/callback";
 
 export class FutureAwaiter<A> {
     private _hasCompleted: boolean;

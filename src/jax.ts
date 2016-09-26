@@ -1,4 +1,4 @@
-import { isNumber, isBoolean, isString, isFunction, isNone } from "./utils/type";
+import { isNumber, isBoolean, isString, isFunction, isDate, isNone } from "./utils/type";
 import { isArray, isEqualArray } from "./utils/type";
 import { isObject, isEmptyObject, isEqualObject } from "./utils/type";
 
@@ -17,7 +17,7 @@ import { Url, parseUrl, toUrlString } from "./utils/url";
 
 
 export {
-    isNumber, isBoolean, isString, isFunction, isNone,
+    isNumber, isBoolean, isString, isFunction, isDate, isNone,
     isArray, isEqualArray,
     isObject, isEmptyObject, isEqualObject,
 

@@ -2,7 +2,7 @@
 /// <reference path="../../typings/mocha/mocha.d.ts" />
 
 import assert from "power-assert";
-import { isNumber, isString, isBoolean, isFunction, isNone } from "../../src/jax";
+import { isNumber, isString, isBoolean, isFunction, isDate, isNone } from "../../src/jax";
 import { isArray, isEqualArray, isObject, isEmptyObject, isEqualObject } from "../../src/jax";
 
 describe("isAny", () => {
@@ -40,6 +40,19 @@ describe("isAny", () => {
         assert.ok(isArray([]), "isArray");
         assert.ok(isArray([1, 2, 3]), "isArray");
         assert.ok(isArray([1, 2, "aaaa"]), "isArray");
+    });
+
+
+    it("isDate", () => {
+        assert.ok(!isDate(undefined));
+        assert.ok(!isDate(null));
+        assert.ok(!isDate(0));
+        assert.ok(!isDate(1));
+        assert.ok(!isDate(1.0));
+        assert.ok(!isDate({}));
+        assert.ok(!isDate("string"));
+
+        assert.ok(isDate(new Date()));
     });
 
 
