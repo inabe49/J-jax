@@ -25,9 +25,12 @@
   ],
   "typings": "src/jax.d.ts",
   "devDependencies": {
-    "espower-typescript": "^5.0.1",
-    "mocha": "^3.0.2",
-    "power-assert": "^1.4.1",
-    "sinon": "^1.17.5"
+    "@types/mocha": "^2.2.40",
+    "@types/power-assert": "^1.4.29",
+    "@types/sinon": "^1.16.36",
+    "espower-typescript": "^8.0.0",
+    "mocha": "^3.2.0",
+    "power-assert": "^1.4.2",
+    "sinon": "^2.1.0"
   }
 }

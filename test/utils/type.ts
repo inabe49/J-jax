@@ -1,7 +1,4 @@
-/// <reference path="../../typings/power-assert/power-assert.d.ts" />
-/// <reference path="../../typings/mocha/mocha.d.ts" />
-
-import assert from "power-assert";
+import * as assert from "power-assert";
 import { isNumber, isString, isBoolean, isFunction, isDate, isNone } from "../../src/jax";
 import { isArray, isEqualArray, isObject, isEmptyObject, isEqualObject } from "../../src/jax";
 
